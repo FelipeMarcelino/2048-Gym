@@ -26,6 +26,7 @@ get_total_score	gym-2048/2048_psr/envs/game_2048.py	/^    def get_total_score(se
 make_move	gym-2048/2048_psr/envs/game_2048.py	/^    def make_move(self, move) -> None:$/;"	m	class:Game2048
 np	gym-2048/2048_psr/envs/game_2048.py	/^import numpy as np$/;"	I
 np	gym-2048/2048_psr/envs/game_2048_unittest.py	/^import numpy as np$/;"	I
+reset	gym-2048/2048_psr/envs/game_2048.py	/^    def reset(self) -> None:$/;"	m	class:Game2048
 set_board	gym-2048/2048_psr/envs/game_2048.py	/^    def set_board(self, board):$/;"	m	class:Game2048
 test_down_board	gym-2048/2048_psr/envs/game_2048_unittest.py	/^    def test_down_board(self):$/;"	m	class:Game2048Test
 test_down_total	gym-2048/2048_psr/envs/game_2048_unittest.py	/^    def test_down_total(self):$/;"	m	class:Game2048Test
@@ -35,3 +36,6 @@ test_right_board	gym-2048/2048_psr/envs/game_2048_unittest.py	/^    def test_rig
 test_right_total	gym-2048/2048_psr/envs/game_2048_unittest.py	/^    def test_right_total(self):$/;"	m	class:Game2048Test
 test_up_board	gym-2048/2048_psr/envs/game_2048_unittest.py	/^    def test_up_board(self):$/;"	m	class:Game2048Test
 test_up_total	gym-2048/2048_psr/envs/game_2048_unittest.py	/^    def test_up_total(self):$/;"	m	class:Game2048Test
+test_verify_game_state_merge	gym-2048/2048_psr/envs/game_2048_unittest.py	/^    def test_verify_game_state_merge(self):$/;"	m	class:Game2048Test
+test_verify_game_state_zero	gym-2048/2048_psr/envs/game_2048_unittest.py	/^    def test_verify_game_state_zero(self):$/;"	m	class:Game2048Test
+verify_game_state	gym-2048/2048_psr/envs/game_2048.py	/^    def verify_game_state(self) -> bool:$/;"	m	class:Game2048

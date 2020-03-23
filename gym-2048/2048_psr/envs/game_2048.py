@@ -131,6 +131,7 @@ class Game2048():
 
     def set_board(self, board):
         """This function is only for test purpose."""
+
         self.__board = board
 
     def get_board(self):
@@ -155,3 +156,36 @@ class Game2048():
             self.__right()
         if move == 3:
             self.__left()
+
+    def verify_game_state(self) -> bool:
+        "Check if the game has done or not."
+
+        # Verify zero entries
+        for line in range(self.__board_size):
+            for column in range(self.__board_size):
+                if(self.__board[line][column] == 0):
+                    return False
+
+        # Verify possible merges
+        for line in range(1, self.__board_size):
+            for column in range(1, self.__board_size):
+                if self.__board[line][column] == self.__board[line][column - 1] or self.__board[line][column] == \
+                self.__board[line - 1][column]:
+                    return False
+
+        # Veirfy possible merges in first column and first line
+        for line in range(1,self.__board_size):
+            if self.__board[line][0] == self.__board[line - 1][0]:
+                return False
+
+        for column in range(1,self.__board_size):
+            if self.__board[0][column] == self.__board[0][column - 1]:
+                return False
+
+        return True
+
+
+    def reset(self) -> None:
+        self.__create_board()
+        self.__add_two_or_four()
+        self.__add_two_or_four()

@@ -76,5 +76,23 @@ class Game2048Test(unittest.TestCase):
         board = game.get_board()
         np.testing.assert_array_equal(board, np.array([[8,16,4,0],[2,4,8,0],[8,0,0,0],[4,0,0,0]]))
 
+    def test_verify_game_state_zero(self):
+        game = Game2048(4)
+        board = np.array([[8,16,2,2],[2,4,8,0],[8,0,0,0],[2,2,0,0]], dtype=np.uint32)
+        game.set_board(board)
+        done = game.verify_game_state()
+        self.assertEqual(done, False)
+        
+    def test_verify_game_state_merge(self):
+        game = Game2048(4)
+        board = np.array([[2,4,2,2],[2,16,8,4],[4,128,64,8],[16,4,2,4]], dtype=np.uint32)
+        game.set_board(board)
+        done = game.verify_game_state()
+        self.assertEqual(done, False)
+        
+
+
+
+
 if __name__ == "__main__":
     unittest.main()
