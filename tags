@@ -1,0 +1,37 @@
+!_TAG_FILE_FORMAT	2	/extended format; --format=1 will not append ;" to lines/
+!_TAG_FILE_SORTED	1	/0=unsorted, 1=sorted, 2=foldcase/
+!_TAG_OUTPUT_MODE	u-ctags	/u-ctags or e-ctags/
+!_TAG_PROGRAM_AUTHOR	Universal Ctags Team	//
+!_TAG_PROGRAM_NAME	Universal Ctags	/Derived from Exuberant Ctags/
+!_TAG_PROGRAM_URL	https://ctags.io/	/official site/
+!_TAG_PROGRAM_VERSION	0.0.0	/3fdf28bc/
+2048-Gym	README.md	/^# 2048-Gym$/;"	c
+Game2048	gym-2048/2048_psr/envs/game_2048.py	/^class Game2048():$/;"	c
+Game2048Test	gym-2048/2048_psr/envs/game_2048_unittest.py	/^class Game2048Test(unittest.TestCase):$/;"	c
+__add_two_or_four	gym-2048/2048_psr/envs/game_2048.py	/^    def __add_two_or_four(self) -> None:$/;"	m	class:Game2048	file:
+__cover_up	gym-2048/2048_psr/envs/game_2048.py	/^    def __cover_up(self, board):$/;"	m	class:Game2048	file:
+__create_board	gym-2048/2048_psr/envs/game_2048.py	/^    def __create_board(self) -> None:$/;"	m	class:Game2048	file:
+__down	gym-2048/2048_psr/envs/game_2048.py	/^    def __down(self) -> None:$/;"	m	class:Game2048	file:
+__init__	gym-2048/2048_psr/envs/game_2048.py	/^    def __init__(self, board_size: int) -> None:$/;"	m	class:Game2048
+__left	gym-2048/2048_psr/envs/game_2048.py	/^    def __left(self) -> None:$/;"	m	class:Game2048	file:
+__merge	gym-2048/2048_psr/envs/game_2048.py	/^    def __merge(self, board) -> np.array:$/;"	m	class:Game2048	file:
+__reverse	gym-2048/2048_psr/envs/game_2048.py	/^    def __reverse(self, board):$/;"	m	class:Game2048	file:
+__right	gym-2048/2048_psr/envs/game_2048.py	/^    def __right(self) -> None:$/;"	m	class:Game2048	file:
+__transpose	gym-2048/2048_psr/envs/game_2048.py	/^    def __transpose(self, board):$/;"	m	class:Game2048	file:
+__up	gym-2048/2048_psr/envs/game_2048.py	/^    def __up(self) -> None:$/;"	m	class:Game2048	file:
+confirm_move	gym-2048/2048_psr/envs/game_2048.py	/^    def confirm_move(self):$/;"	m	class:Game2048
+get_board	gym-2048/2048_psr/envs/game_2048.py	/^    def get_board(self):$/;"	m	class:Game2048
+get_move_score	gym-2048/2048_psr/envs/game_2048.py	/^    def get_move_score(self) -> int:$/;"	m	class:Game2048
+get_total_score	gym-2048/2048_psr/envs/game_2048.py	/^    def get_total_score(self) -> int:$/;"	m	class:Game2048
+make_move	gym-2048/2048_psr/envs/game_2048.py	/^    def make_move(self, move) -> None:$/;"	m	class:Game2048
+np	gym-2048/2048_psr/envs/game_2048.py	/^import numpy as np$/;"	I
+np	gym-2048/2048_psr/envs/game_2048_unittest.py	/^import numpy as np$/;"	I
+set_board	gym-2048/2048_psr/envs/game_2048.py	/^    def set_board(self, board):$/;"	m	class:Game2048
+test_down_board	gym-2048/2048_psr/envs/game_2048_unittest.py	/^    def test_down_board(self):$/;"	m	class:Game2048Test
+test_down_total	gym-2048/2048_psr/envs/game_2048_unittest.py	/^    def test_down_total(self):$/;"	m	class:Game2048Test
+test_left_board	gym-2048/2048_psr/envs/game_2048_unittest.py	/^    def test_left_board(self):$/;"	m	class:Game2048Test
+test_left_total	gym-2048/2048_psr/envs/game_2048_unittest.py	/^    def test_left_total(self):$/;"	m	class:Game2048Test
+test_right_board	gym-2048/2048_psr/envs/game_2048_unittest.py	/^    def test_right_board(self):$/;"	m	class:Game2048Test
+test_right_total	gym-2048/2048_psr/envs/game_2048_unittest.py	/^    def test_right_total(self):$/;"	m	class:Game2048Test
+test_up_board	gym-2048/2048_psr/envs/game_2048_unittest.py	/^    def test_up_board(self):$/;"	m	class:Game2048Test
+test_up_total	gym-2048/2048_psr/envs/game_2048_unittest.py	/^    def test_up_total(self):$/;"	m	class:Game2048Test
