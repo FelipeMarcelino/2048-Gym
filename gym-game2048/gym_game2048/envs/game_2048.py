@@ -1,35 +1,40 @@
 import numpy as np
+from numba import jitclass, njit, gdb_init
+from numba import uint32, int32, int32
 
+spec = [
+    ('__board_size', int32),
+    ('__total_score', uint32),
+    ('__score', uint32),
+    ('__temp_board', uint32[:,:]),
+    ('__board',uint32[:,:])
+]
+
+@jitclass(spec)
 class Game2048():
 
-    def __init__(self, board_size: int) -> None:
+    def __init__(self, board_size: int):
 
-        self.__board_size: int = board_size
-        self.__total_score: int = 0
-        self.__score: int = 0
-        self.__temp_board = None
-        self.__create_board()
+        self.__board_size = board_size
+        self.__score = 0
+        self.__total_score = 0
+        self.__board = np.zeros((board_size,board_size), dtype=np.uint32)
+        self.__temp_board = np.zeros((board_size,board_size), dtype=np.uint32)
         self.__add_two_or_four()
         self.__add_two_or_four()
 
-    def __create_board(self) -> None:
-        """Create the board game."""
 
-        self.__board = np.zeros((self.__board_size, self.__board_size), dtype=np.uint32)
-
-
-
-    def __add_two_or_four(self) -> None:
+    def __add_two_or_four(self):
         """Add tile with number two."""
 
         # Coordinates to add a tile with number two
-        line: int  = np.random.randint(0,  self.__board_size)
-        column: int  = np.random.randint(0,  self.__board_size)
+        line  = np.random.randint(0,  self.__board_size)
+        column  = np.random.randint(0,  self.__board_size)
         while(self.__board[line][column] != 0):
             line = np.random.randint(0, self.__board_size)
             column = np.random.randint(0, self.__board_size)
 
-        if np.random.uniform(0,1,1) >= 0.9:
+        if np.random.uniform(0,1) >= 0.9:
             self.__board[line][column] = 4
         else:
             self.__board[line][column] = 2
@@ -143,8 +148,10 @@ class Game2048():
         """Execute movement.""" 
         self.__board = self.__temp_board.copy()
         self.__total_score = self.__total_score + self.__score
+        self.__add_two_or_four()
 
-    def make_move(self, move) -> None:
+
+    def make_move(self, move):
         """Make a move."""
         self.__score = 0
 
@@ -186,6 +193,7 @@ class Game2048():
 
 
     def reset(self) -> None:
-        self.__create_board()
+        self.__temp_board = np.zeros((self.__board_size, self.__board_size), dtype=np.uint32)
+        self.__board = np.zeros((self.__board_size, self.__board), dtype=np.uint32)
         self.__add_two_or_four()
         self.__add_two_or_four()
