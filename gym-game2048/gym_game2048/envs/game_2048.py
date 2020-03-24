@@ -3,47 +3,46 @@ from numba import jitclass, njit, gdb_init
 from numba import uint32, int32, int32
 
 spec = [
-    ('__board_size', int32),
-    ('__total_score', uint32),
-    ('__score', uint32),
-    ('__temp_board', uint32[:,:]),
-    ('__board',uint32[:,:])
+    ("__board_size", int32),
+    ("__total_score", uint32),
+    ("__score", uint32),
+    ("__temp_board", uint32[:, :]),
+    ("__board", uint32[:, :]),
 ]
 
-@jitclass(spec)
-class Game2048():
 
+@jitclass(spec)
+class Game2048:
     def __init__(self, board_size: int):
 
         self.__board_size = board_size
         self.__score = 0
         self.__total_score = 0
-        self.__board = np.zeros((board_size,board_size), dtype=np.uint32)
-        self.__temp_board = np.zeros((board_size,board_size), dtype=np.uint32)
+        self.__board = np.zeros((board_size, board_size), dtype=np.uint32)
+        self.__temp_board = np.zeros((board_size, board_size), dtype=np.uint32)
         self.__add_two_or_four()
         self.__add_two_or_four()
-
 
     def __add_two_or_four(self):
         """Add tile with number two."""
 
+        indexes = np.where(self.__board == 0)
+
+        if len(indexes[0]) == 0:
+            return
+
         # Coordinates to add a tile with number two
-        line  = np.random.randint(0,  self.__board_size)
-        column  = np.random.randint(0,  self.__board_size)
-        while(self.__board[line][column] != 0):
-            line = np.random.randint(0, self.__board_size)
-            column = np.random.randint(0, self.__board_size)
+        index = np.random.choice(np.arange(len(indexes[0])))
 
-        if np.random.uniform(0,1) >= 0.9:
-            self.__board[line][column] = 4
+        if np.random.uniform(0, 1) >= 0.9:
+            self.__board[indexes[0][index]][indexes[1][index]] = 4
         else:
-            self.__board[line][column] = 2
-
+            self.__board[indexes[0][index]][indexes[1][index]] = 2
 
     def __transpose(self, board):
         """Transpose a matrix."""
 
-        temp = np.zeros((self.__board_size,self.__board_size), dtype=np.uint32)
+        temp = np.zeros((self.__board_size, self.__board_size), dtype=np.uint32)
 
         for line in range(self.__board_size):
             for column in range(self.__board_size):
@@ -54,7 +53,7 @@ class Game2048():
     def __reverse(self, board):
         """Reverse a matrix."""
 
-        temp = np.zeros((self.__board_size,self.__board_size), dtype=np.uint32)
+        temp = np.zeros((self.__board_size, self.__board_size), dtype=np.uint32)
 
         for line in range(self.__board_size):
             for column in range(self.__board_size):
@@ -62,28 +61,26 @@ class Game2048():
 
         return temp
 
-
     def __cover_up(self, board):
         """Cover the most antecedent zeros with non-zero number. """
 
-        temp = np.zeros((self.__board_size,self.__board_size), dtype=np.uint32)
+        temp = np.zeros((self.__board_size, self.__board_size), dtype=np.uint32)
 
         for column in range(self.__board_size):
             up = 0
             for line in range(self.__board_size):
-                if board[line][column] != 0 :
+                if board[line][column] != 0:
                     temp[up][column] = board[line][column]
                     up = up + 1
 
         return temp
 
-
-    def __merge(self, board) -> np.array:
+    def __merge(self, board):
         """Verify if a merge is possible and execute."""
 
         for line in range(1, self.__board_size):
             for column in range(self.__board_size):
-                if(board[line][column] == board[line - 1][column]):
+                if board[line][column] == board[line - 1][column]:
                     self.__score = self.__score + (board[line][column] * 2)
                     board[line - 1][column] = board[line - 1][column] * 2
                     board[line][column] = 0
@@ -92,14 +89,14 @@ class Game2048():
 
         return board
 
-    def __up(self) -> None:
+    def __up(self):
 
         temp = self.__cover_up(self.__board)
         temp = self.__merge(temp)
         temp = self.__cover_up(temp)
         self.__temp_board = temp
 
-    def __down(self) -> None:
+    def __down(self):
 
         temp = self.__reverse(self.__board)
         temp = self.__merge(temp)
@@ -107,7 +104,7 @@ class Game2048():
         temp = self.__reverse(temp)
         self.__temp_board = temp
 
-    def __right(self) -> None:
+    def __right(self):
 
         temp = self.__reverse(self.__transpose(self.__board))
         temp = self.__merge(temp)
@@ -115,7 +112,7 @@ class Game2048():
         temp = self.__transpose(self.__reverse(temp))
         self.__temp_board = temp
 
-    def __left(self) -> None:
+    def __left(self):
 
         temp = self.__transpose(self.__board)
         temp = self.__merge(temp)
@@ -123,13 +120,12 @@ class Game2048():
         temp = self.__transpose(temp)
         self.__temp_board = temp
 
-
-    def get_move_score(self) -> int:
+    def get_move_score(self):
         """Get the last score move."""
 
         return self.__score
 
-    def get_total_score(self) -> int:
+    def get_total_score(self):
         """Get the total score gained until now."""
 
         return self.__total_score
@@ -142,14 +138,13 @@ class Game2048():
     def get_board(self):
         """Get the actual board."""
 
-        return  self.__board
+        return self.__board
 
     def confirm_move(self):
-        """Execute movement.""" 
+        """Execute movement."""
         self.__board = self.__temp_board.copy()
         self.__total_score = self.__total_score + self.__score
         self.__add_two_or_four()
-
 
     def make_move(self, move):
         """Make a move."""
@@ -164,36 +159,39 @@ class Game2048():
         if move == 3:
             self.__left()
 
-    def verify_game_state(self) -> bool:
+    def verify_game_state(self):
         "Check if the game has done or not."
 
         # Verify zero entries
         for line in range(self.__board_size):
             for column in range(self.__board_size):
-                if(self.__board[line][column] == 0):
+                if self.__board[line][column] == 0:
                     return False
 
         # Verify possible merges
         for line in range(1, self.__board_size):
             for column in range(1, self.__board_size):
-                if self.__board[line][column] == self.__board[line][column - 1] or self.__board[line][column] == \
-                self.__board[line - 1][column]:
+                if (
+                    self.__board[line][column] == self.__board[line][column - 1]
+                    or self.__board[line][column] == self.__board[line - 1][column]
+                ):
                     return False
 
         # Veirfy possible merges in first column and first line
-        for line in range(1,self.__board_size):
+        for line in range(1, self.__board_size):
             if self.__board[line][0] == self.__board[line - 1][0]:
                 return False
 
-        for column in range(1,self.__board_size):
+        for column in range(1, self.__board_size):
             if self.__board[0][column] == self.__board[0][column - 1]:
                 return False
 
         return True
 
-
-    def reset(self) -> None:
+    def reset(self):
+        self.__board = np.zeros((self.__board_size, self.__board_size), dtype=np.uint32)
         self.__temp_board = np.zeros((self.__board_size, self.__board_size), dtype=np.uint32)
-        self.__board = np.zeros((self.__board_size, self.__board), dtype=np.uint32)
+        self.__score = 0
+        self.__total_score = 0
         self.__add_two_or_four()
         self.__add_two_or_four()

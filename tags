@@ -1,52 +1,71 @@
 !_TAG_FILE_FORMAT	2	/extended format; --format=1 will not append ;" to lines/
 !_TAG_FILE_SORTED	1	/0=unsorted, 1=sorted, 2=foldcase/
+!_TAG_OUTPUT_FILESEP	slash	/slash or backslash/
 !_TAG_OUTPUT_MODE	u-ctags	/u-ctags or e-ctags/
 !_TAG_PROGRAM_AUTHOR	Universal Ctags Team	//
 !_TAG_PROGRAM_NAME	Universal Ctags	/Derived from Exuberant Ctags/
 !_TAG_PROGRAM_URL	https://ctags.io/	/official site/
-!_TAG_PROGRAM_VERSION	0.0.0	/3fdf28bc/
+!_TAG_PROGRAM_VERSION	0.0.0	/a3c87ab5/
 2048-Gym	README.md	/^# 2048-Gym$/;"	c
-Game2048	gym-game2048/gym_game2048/envs/game_2048.py	/^class Game2048():$/;"	c
+Game2048	gym-game2048/gym_game2048/envs/game_2048.py	/^class Game2048:$/;"	c
 Game2048Env	gym-game2048/gym_game2048/envs/env.py	/^class Game2048Env(gym.Env):$/;"	c
 Game2048Test	gym-game2048/gym_game2048/envs/game_2048_unittest.py	/^class Game2048Test(unittest.TestCase):$/;"	c
 __add_two_or_four	gym-game2048/gym_game2048/envs/game_2048.py	/^    def __add_two_or_four(self):$/;"	m	class:Game2048	file:
 __cover_up	gym-game2048/gym_game2048/envs/game_2048.py	/^    def __cover_up(self, board):$/;"	m	class:Game2048	file:
-__down	gym-game2048/gym_game2048/envs/game_2048.py	/^    def __down(self) -> None:$/;"	m	class:Game2048	file:
-__init__	gym-game2048/gym_game2048/envs/env.py	/^    def __init__(self, board_size, seed = None):$/;"	m	class:Game2048Env
+__down	gym-game2048/gym_game2048/envs/game_2048.py	/^    def __down(self):$/;"	m	class:Game2048	file:
+__init__	gym-game2048/gym_game2048/envs/env.py	/^    def __init__(self, board_size, seed=None):$/;"	m	class:Game2048Env
 __init__	gym-game2048/gym_game2048/envs/game_2048.py	/^    def __init__(self, board_size: int):$/;"	m	class:Game2048
-__left	gym-game2048/gym_game2048/envs/game_2048.py	/^    def __left(self) -> None:$/;"	m	class:Game2048	file:
-__merge	gym-game2048/gym_game2048/envs/game_2048.py	/^    def __merge(self, board) -> np.array:$/;"	m	class:Game2048	file:
+__left	gym-game2048/gym_game2048/envs/game_2048.py	/^    def __left(self):$/;"	m	class:Game2048	file:
+__merge	gym-game2048/gym_game2048/envs/game_2048.py	/^    def __merge(self, board):$/;"	m	class:Game2048	file:
 __reverse	gym-game2048/gym_game2048/envs/game_2048.py	/^    def __reverse(self, board):$/;"	m	class:Game2048	file:
-__right	gym-game2048/gym_game2048/envs/game_2048.py	/^    def __right(self) -> None:$/;"	m	class:Game2048	file:
+__right	gym-game2048/gym_game2048/envs/game_2048.py	/^    def __right(self):$/;"	m	class:Game2048	file:
 __transpose	gym-game2048/gym_game2048/envs/game_2048.py	/^    def __transpose(self, board):$/;"	m	class:Game2048	file:
-__up	gym-game2048/gym_game2048/envs/game_2048.py	/^    def __up(self) -> None:$/;"	m	class:Game2048	file:
+__up	gym-game2048/gym_game2048/envs/game_2048.py	/^    def __up(self):$/;"	m	class:Game2048	file:
+best_mean_reward	model/model_optimize.py	/^best_mean_reward, n_steps = -np.inf, 0$/;"	v
+board_size	gym-game2048/gym_game2048/envs/check_env.py	/^board_size = 4$/;"	v
+callback	model/model_optimize.py	/^def callback(_locals, _globals):$/;"	f
 confirm_move	gym-game2048/gym_game2048/envs/game_2048.py	/^    def confirm_move(self):$/;"	m	class:Game2048
 create_env	model/model_optimize.py	/^def create_env(board_size, seed):$/;"	f
+df	model/get_trials.py	/^df = study.trials_dataframe(attrs=("number", "value", "params", "state"))$/;"	v
+env	gym-game2048/gym_game2048/envs/check_env.py	/^env = gym.make("game2048-v0", board_size=board_size, seed=seed)$/;"	v
 game	gym-game2048/gym_game2048/envs/test_performance_numba.py	/^game = Game2048(4)$/;"	v
 get_board	gym-game2048/gym_game2048/envs/game_2048.py	/^    def get_board(self):$/;"	m	class:Game2048
-get_move_score	gym-game2048/gym_game2048/envs/game_2048.py	/^    def get_move_score(self) -> int:$/;"	m	class:Game2048
-get_total_score	gym-game2048/gym_game2048/envs/game_2048.py	/^    def get_total_score(self) -> int:$/;"	m	class:Game2048
+get_move_score	gym-game2048/gym_game2048/envs/game_2048.py	/^    def get_move_score(self):$/;"	m	class:Game2048
+get_total_score	gym-game2048/gym_game2048/envs/game_2048.py	/^    def get_total_score(self):$/;"	m	class:Game2048
+log_dir	model/model_optimize.py	/^log_dir = "tmp\/"$/;"	v
 main	model/model_optimize.py	/^def main():$/;"	f
 make_move	gym-game2048/gym_game2048/envs/game_2048.py	/^    def make_move(self, move):$/;"	m	class:Game2048
+metadata	gym-game2048/gym_game2048/envs/env.py	/^    metadata = {"render.modes": ["human"]}$/;"	v	class:Game2048Env
 move	gym-game2048/gym_game2048/envs/test_performance_numba.py	/^    move = np.random.randint(4)$/;"	v
+n_steps	model/model_optimize.py	/^best_mean_reward, n_steps = -np.inf, 0$/;"	v
 np	gym-game2048/gym_game2048/envs/env.py	/^import numpy as np$/;"	I
 np	gym-game2048/gym_game2048/envs/game_2048.py	/^import numpy as np$/;"	I
 np	gym-game2048/gym_game2048/envs/game_2048_unittest.py	/^import numpy as np$/;"	I
 np	gym-game2048/gym_game2048/envs/test_performance_numba.py	/^import numpy as np$/;"	I
+np	model/model_optimize.py	/^import numpy as np$/;"	I
+optimize_agent	model/model_optimize.py	/^def optimize_agent(trial):$/;"	f
+plt	model/model_optimize.py	/^import matplotlib.pyplot as plt$/;"	I
+render	gym-game2048/gym_game2048/envs/env.py	/^    def render(self, mode="human"):$/;"	m	class:Game2048Env
 reset	gym-game2048/gym_game2048/envs/env.py	/^    def reset(self):$/;"	m	class:Game2048Env
-reset	gym-game2048/gym_game2048/envs/game_2048.py	/^    def reset(self) -> None:$/;"	m	class:Game2048
+reset	gym-game2048/gym_game2048/envs/game_2048.py	/^    def reset(self):$/;"	m	class:Game2048
+seed	gym-game2048/gym_game2048/envs/check_env.py	/^seed = None$/;"	v
 set_board	gym-game2048/gym_game2048/envs/game_2048.py	/^    def set_board(self, board):$/;"	m	class:Game2048
 spec	gym-game2048/gym_game2048/envs/game_2048.py	/^spec = [$/;"	v
 step	gym-game2048/gym_game2048/envs/env.py	/^    def step(self, action):$/;"	m	class:Game2048Env
+study	model/get_trials.py	/^study = optuna.create_study($/;"	v
+study_name	model/get_trials.py	/^study_name = sys.argv[1]$/;"	v
+study_name	model/model_optimize.py	/^study_name = sys.argv[1]$/;"	v
 test_down_board	gym-game2048/gym_game2048/envs/game_2048_unittest.py	/^    def test_down_board(self):$/;"	m	class:Game2048Test
 test_down_total	gym-game2048/gym_game2048/envs/game_2048_unittest.py	/^    def test_down_total(self):$/;"	m	class:Game2048Test
 test_left_board	gym-game2048/gym_game2048/envs/game_2048_unittest.py	/^    def test_left_board(self):$/;"	m	class:Game2048Test
 test_left_total	gym-game2048/gym_game2048/envs/game_2048_unittest.py	/^    def test_left_total(self):$/;"	m	class:Game2048Test
+test_model	model/model_optimize.py	/^def test_model(model, env):$/;"	f
 test_right_board	gym-game2048/gym_game2048/envs/game_2048_unittest.py	/^    def test_right_board(self):$/;"	m	class:Game2048Test
 test_right_total	gym-game2048/gym_game2048/envs/game_2048_unittest.py	/^    def test_right_total(self):$/;"	m	class:Game2048Test
 test_up_board	gym-game2048/gym_game2048/envs/game_2048_unittest.py	/^    def test_up_board(self):$/;"	m	class:Game2048Test
 test_up_total	gym-game2048/gym_game2048/envs/game_2048_unittest.py	/^    def test_up_total(self):$/;"	m	class:Game2048Test
 test_verify_game_state_merge	gym-game2048/gym_game2048/envs/game_2048_unittest.py	/^    def test_verify_game_state_merge(self):$/;"	m	class:Game2048Test
 test_verify_game_state_zero	gym-game2048/gym_game2048/envs/game_2048_unittest.py	/^    def test_verify_game_state_zero(self):$/;"	m	class:Game2048Test
-train_model	model/model_optimize.py	/^def train_model(env, steps):$/;"	f
-verify_game_state	gym-game2048/gym_game2048/envs/game_2048.py	/^    def verify_game_state(self) -> bool:$/;"	m	class:Game2048
+train_model	model/model_optimize.py	/^def train_model(env, steps, model_params):$/;"	f
+trial_hiperparameter	model/model_optimize.py	/^def trial_hiperparameter(trial):$/;"	f
+verify_game_state	gym-game2048/gym_game2048/envs/game_2048.py	/^    def verify_game_state(self):$/;"	m	class:Game2048
