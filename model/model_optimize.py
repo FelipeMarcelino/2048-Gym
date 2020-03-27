@@ -19,6 +19,13 @@ best_mean_reward, n_steps = -np.inf, 0
 
 study_name = sys.argv[1]
 
+# Custom MLP policy of three layers of size 128 each
+class CustomPolicy(FeedForwardPolicy):
+    def __init__(self, *args, **kwargs):
+        super(CustomPolicy, self).__init__(
+            *args, **kwargs, net_arch=[dict(pi=[128, 128, 128], vf=[128, 128, 128])], feature_extraction="mlp"
+        )
+
 
 def callback(_locals, _globals):
     """
@@ -63,17 +70,19 @@ def train_model(env, steps, model_params):
 
     env = Monitor(env, log_dir, allow_early_resets=True)
 
-    num_cpu = 8
+    num_cpu = 16
     env = DummyVecEnv([lambda: env for i in range(num_cpu)])
 
     # model = PPO2(MlpPolicy, env, verbose=0, tensorboard_log="./tensorboards/")
     # model = DQN(MlpPolicy, env, verbose=0, tensorboard_log="./tensorboards/")
-    model = ACER(MlpPolicy, env, verbose=0, tensorboard_log="./tensorboards/", **model_params)
+    # model = ACER(MlpPolicy, env, verbose=0, **model_params)
+    # model = ACER(MlpPolicy, env, verbose=0, tensorboard_log="./tensorboards/", **model_params)
+    model = ACER(CustomPolicy, env, verbose=0, tensorboard_log="./tensorboards/", **model_params)
     model.learn(total_timesteps=steps)
 
-    # results_plotter.plot_results([log_dir], steps, results_plotter.X_TIMESTEPS, "PPO2 psr")
-    # plt.savefig("first_model.png")
-    # model.save("first_model")
+    # results_plotter.plot_results([log_dir], steps, results_plotter.X_TIMESTEPS, "ACER psr")
+    # plt.savefig("100-million.png")
+    # model.save("100-million")
 
     return model
 
@@ -81,7 +90,7 @@ def train_model(env, steps, model_params):
 def test_model(model, env):
     total_score = 0
 
-    for i in range(10000):
+    for i in range(1000):
 
         obs = env.reset()
         done = False
@@ -94,7 +103,7 @@ def test_model(model, env):
 
         total_score = total_score + total_score_episode
 
-    return total_score / 10000
+    return total_score / 1000
 
 
 def trial_hiperparameter(trial):
@@ -117,10 +126,17 @@ def optimize_agent(trial):
 
     model_params = trial_hiperparameter(trial)
     env = create_env(4, None)
-    model = train_model(env, 400000, model_params)
+    model = train_model(env, 20000000, model_params)
     total_score = test_model(model, env)
 
     return total_score
+
+
+def train_specific_params():
+
+    env = create_env(4, None)
+    model = train_model(env, 2000000, None)
+    total_score = test_model(model, env)
 
 
 def main():
@@ -133,6 +149,7 @@ def main():
         pruner=optuna.pruners.MedianPruner(),
     )
     study.optimize(optimize_agent, n_trials=None, n_jobs=1)
+    # train_specific_params()
 
 
 if __name__ == "__main__":
