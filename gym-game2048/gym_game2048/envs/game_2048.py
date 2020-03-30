@@ -1,6 +1,6 @@
 import numpy as np
 from numba import jitclass, njit, gdb_init
-from numba import uint32, int32, int32
+from numba import uint32, int32, int32, b1, float64
 
 spec = [
     ("__board_size", int32),
@@ -8,20 +8,32 @@ spec = [
     ("__score", uint32),
     ("__temp_board", uint32[:, :]),
     ("__board", uint32[:, :]),
+    ("__done_merge", b1),
+    ("__done_cover_up", b1),
+    ("__invalid_count", uint32),
+    ("__total_count", uint32),
+    ("__invalid_move_warmup", uint32),
+    ("__invalid_move_threshold", float64),
 ]
 
 
 @jitclass(spec)
 class Game2048:
-    def __init__(self, board_size: int):
+    def __init__(self, board_size: int, invalid_move_warmup=16, invalid_move_threshold=0.1):
 
         self.__board_size = board_size
         self.__score = 0
         self.__total_score = 0
+        self.__invalid_count = 0
+        self.__total_count = 0
+        self.__invalid_move_warmup = invalid_move_warmup
+        self.__invalid_move_threshold = invalid_move_threshold
         self.__board = np.zeros((board_size, board_size), dtype=np.uint32)
         self.__temp_board = np.zeros((board_size, board_size), dtype=np.uint32)
         self.__add_two_or_four()
         self.__add_two_or_four()
+        self.__done_merge = False
+        self.__done_cover_up = False
 
     def __add_two_or_four(self):
         """Add tile with number two."""
@@ -65,6 +77,7 @@ class Game2048:
         """Cover the most antecedent zeros with non-zero number. """
 
         temp = np.zeros((self.__board_size, self.__board_size), dtype=np.uint32)
+        self.__done_cover_up = False
 
         for column in range(self.__board_size):
             up = 0
@@ -72,11 +85,15 @@ class Game2048:
                 if board[line][column] != 0:
                     temp[up][column] = board[line][column]
                     up = up + 1
+                    if up != line:
+                        self.__done_cover_up = True
 
         return temp
 
     def __merge(self, board):
         """Verify if a merge is possible and execute."""
+
+        self.__done_merge = False
 
         for line in range(1, self.__board_size):
             for column in range(self.__board_size):
@@ -84,6 +101,7 @@ class Game2048:
                     self.__score = self.__score + (board[line][column] * 2)
                     board[line - 1][column] = board[line - 1][column] * 2
                     board[line][column] = 0
+                    self.__done_merge = True
                 else:
                     continue
 
@@ -142,6 +160,9 @@ class Game2048:
 
     def confirm_move(self):
         """Execute movement."""
+        self.__total_count = self.__total_count + 1
+        if np.array_equal(self.__board, self.__temp_board):
+            self.__invalid_count = self.__invalid_count + 1
         self.__board = self.__temp_board.copy()
         self.__total_score = self.__total_score + self.__score
         self.__add_two_or_four()
@@ -161,6 +182,11 @@ class Game2048:
 
     def verify_game_state(self):
         "Check if the game has done or not."
+        if (
+            self.__invalid_count > self.__invalid_move_warmup
+            and self.__invalid_count > self.__invalid_move_threshold * self.__total_count
+        ):
+            return True
 
         # Verify zero entries
         for line in range(self.__board_size):
@@ -193,5 +219,7 @@ class Game2048:
         self.__temp_board = np.zeros((self.__board_size, self.__board_size), dtype=np.uint32)
         self.__score = 0
         self.__total_score = 0
+        self.__invalid_count = 0
+        self.__total_count = 0
         self.__add_two_or_four()
         self.__add_two_or_four()

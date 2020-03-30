@@ -7,6 +7,7 @@
 !_TAG_PROGRAM_URL	https://ctags.io/	/official site/
 !_TAG_PROGRAM_VERSION	0.0.0	/a3c87ab5/
 2048-Gym	README.md	/^# 2048-Gym$/;"	c
+CustomPolicy	model/model_optimize.py	/^class CustomPolicy(FeedForwardPolicy):$/;"	c
 Game2048	gym-game2048/gym_game2048/envs/game_2048.py	/^class Game2048:$/;"	c
 Game2048Env	gym-game2048/gym_game2048/envs/env.py	/^class Game2048Env(gym.Env):$/;"	c
 Game2048Test	gym-game2048/gym_game2048/envs/game_2048_unittest.py	/^class Game2048Test(unittest.TestCase):$/;"	c
@@ -14,7 +15,8 @@ __add_two_or_four	gym-game2048/gym_game2048/envs/game_2048.py	/^    def __add_tw
 __cover_up	gym-game2048/gym_game2048/envs/game_2048.py	/^    def __cover_up(self, board):$/;"	m	class:Game2048	file:
 __down	gym-game2048/gym_game2048/envs/game_2048.py	/^    def __down(self):$/;"	m	class:Game2048	file:
 __init__	gym-game2048/gym_game2048/envs/env.py	/^    def __init__(self, board_size, seed=None):$/;"	m	class:Game2048Env
-__init__	gym-game2048/gym_game2048/envs/game_2048.py	/^    def __init__(self, board_size: int):$/;"	m	class:Game2048
+__init__	gym-game2048/gym_game2048/envs/game_2048.py	/^    def __init__(self, board_size: int, invalid_move_warmup=16, invalid_move_threshold=0.1):$/;"	m	class:Game2048
+__init__	model/model_optimize.py	/^    def __init__(self, *args, **kwargs):$/;"	m	class:CustomPolicy
 __left	gym-game2048/gym_game2048/envs/game_2048.py	/^    def __left(self):$/;"	m	class:Game2048	file:
 __merge	gym-game2048/gym_game2048/envs/game_2048.py	/^    def __merge(self, board):$/;"	m	class:Game2048	file:
 __reverse	gym-game2048/gym_game2048/envs/game_2048.py	/^    def __reverse(self, board):$/;"	m	class:Game2048	file:
@@ -67,5 +69,6 @@ test_up_total	gym-game2048/gym_game2048/envs/game_2048_unittest.py	/^    def tes
 test_verify_game_state_merge	gym-game2048/gym_game2048/envs/game_2048_unittest.py	/^    def test_verify_game_state_merge(self):$/;"	m	class:Game2048Test
 test_verify_game_state_zero	gym-game2048/gym_game2048/envs/game_2048_unittest.py	/^    def test_verify_game_state_zero(self):$/;"	m	class:Game2048Test
 train_model	model/model_optimize.py	/^def train_model(env, steps, model_params):$/;"	f
+train_specific_params	model/model_optimize.py	/^def train_specific_params():$/;"	f
 trial_hiperparameter	model/model_optimize.py	/^def trial_hiperparameter(trial):$/;"	f
 verify_game_state	gym-game2048/gym_game2048/envs/game_2048.py	/^    def verify_game_state(self):$/;"	m	class:Game2048

@@ -25,16 +25,11 @@ class Game2048Env(gym.Env):
         reward = 0
         info = dict()
 
-        # print("Action:", action)
-        # print(self.__game.get_board())
         self.__game.make_move(action)
         self.__game.confirm_move()
         self.state = self.__game.get_board().flatten()
         self.__done = self.__game.verify_game_state()
         reward = self.__game.get_move_score()
-        # print(self.__game.get_board())
-        # print(reward)
-        # sys.exit(1)
         self.__n_iter = self.__n_iter + 1
 
         info["total_score"] = self.__game.get_total_score()
