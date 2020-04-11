@@ -10,10 +10,23 @@ class Game2048Env(gym.Env):
 
     metadata = {"render.modes": ["human"]}
 
-    def __init__(self, board_size, seed=None):
+    def __init__(self, board_size, binary, mlp, seed=None):
 
         self.state = np.zeros(board_size * board_size)
-        self.observation_space = spaces.Box(0, 2 ** 16, (board_size * board_size,), dtype=np.uint32)
+        self.__binary = binary
+        self.__mlp = mlp
+
+        if self.__binary is True:
+            if mlp is False:
+                self.observation_space = spaces.Box(
+                    0, 1, (board_size, board_size, 16 + (board_size - 4)), dtype=np.uint32
+                )
+            else:
+                self.observation_space = spaces.Box(
+                    0, 1, (board_size * board_size * (16 + (board_size - 4))), dtype=np.uint32
+                )
+        else:
+            self.observation_space = spaces.Box(0, 2 ** 16, (board_size * board_size,), dtype=np.uint32)
         self.action_space = spaces.Discrete(4)  # Up, down, right, left
         self.__game = Game2048(board_size)
         self.__n_iter = 0
@@ -25,14 +38,29 @@ class Game2048Env(gym.Env):
         reward = 0
         info = dict()
 
+        before_move = self.__game.get_board().copy()
         self.__game.make_move(action)
         self.__game.confirm_move()
-        self.state = self.__game.get_board().flatten()
-        self.__done = self.__game.verify_game_state()
-        reward = self.__game.get_move_score()
+
+        if self.__binary is True:
+            self.__game.transform_board_to_power_2_mat()
+
+            if self.__mlp is False:
+                self.state = self.__game.get_power_2_mat()
+            else:
+                self.state = self.__game.get_power_2_mat().flatten()
+        else:
+            self.state = self.__game.get_board().flatten()
+
+        self.__done, penalty = self.__game.verify_game_state()
+        reward = self.__game.get_move_score() + penalty
         self.__n_iter = self.__n_iter + 1
+        after_move = self.__game.get_board()
 
         info["total_score"] = self.__game.get_total_score()
+        info["steps_duration"] = self.__n_iter
+        info["before_move"] = before_move
+        info["after_move"] = after_move
 
         return (self.state, reward, self.__done, info)
 
@@ -41,9 +69,20 @@ class Game2048Env(gym.Env):
         self.__done = False
         self.__total_score = 0
         self.__game.reset()
-        self.state = self.__game.get_board().flatten()
+        if self.__binary is True:
+            self.__game.transform_board_to_power_2_mat()
+            if self.__mlp is False:
+                self.state = self.__game.get_power_2_mat()
+            else:
+                self.state = self.__game.get_power_2_mat().flatten()
+        else:
+            self.state = self.__game.get_board().flatten()
         return self.state
 
     def render(self, mode="human"):
         pass
+
+    def get_board(self):
+
+        return self.__game.get_board()
 

@@ -7,53 +7,104 @@
 !_TAG_PROGRAM_URL	https://ctags.io/	/official site/
 !_TAG_PROGRAM_VERSION	0.0.0	/a3c87ab5/
 2048-Gym	README.md	/^# 2048-Gym$/;"	c
-CustomPolicy	model/model_optimize.py	/^class CustomPolicy(FeedForwardPolicy):$/;"	c
+Agent	model/agents.py	/^class Agent(metaclass=ABCMeta):$/;"	c
+BACKGROUND_COLOR_CELL_EMPTY	gym-game2048/gym_game2048/envs/constants.py	/^BACKGROUND_COLOR_CELL_EMPTY = "#9e948a"$/;"	v
+BACKGROUND_COLOR_DICT	gym-game2048/gym_game2048/envs/constants.py	/^BACKGROUND_COLOR_DICT = {$/;"	v
+BACKGROUND_COLOR_GAME	gym-game2048/gym_game2048/envs/constants.py	/^BACKGROUND_COLOR_GAME = "#92877d"$/;"	v
+CELL_COLOR_DICT	gym-game2048/gym_game2048/envs/constants.py	/^CELL_COLOR_DICT = {$/;"	v
+CustomCnnPolicy	model/custom_policy_ppo.py	/^class CustomCnnPolicy(FeedForwardPolicy):$/;"	c
+CustomMlpPolicy	model/custom_policy_ppo.py	/^class CustomMlpPolicy(FeedForwardPolicy):$/;"	c
+CustomPolicy	model/model_optimize.py	/^class CustomPolicy(DQNPolicy):$/;"	c
+FONT	gym-game2048/gym_game2048/envs/constants.py	/^FONT = ("Verdana", 40, "bold")$/;"	v
+FeedForwardPolicy	model/custom_policy_ppo.py	/^class FeedForwardPolicy(ActorCriticPolicy):$/;"	c
+GRID_LEN	gym-game2048/gym_game2048/envs/constants.py	/^GRID_LEN = 4$/;"	v
+GRID_PADDING	gym-game2048/gym_game2048/envs/constants.py	/^GRID_PADDING = 10$/;"	v
 Game2048	gym-game2048/gym_game2048/envs/game_2048.py	/^class Game2048:$/;"	c
 Game2048Env	gym-game2048/gym_game2048/envs/env.py	/^class Game2048Env(gym.Env):$/;"	c
 Game2048Test	gym-game2048/gym_game2048/envs/game_2048_unittest.py	/^class Game2048Test(unittest.TestCase):$/;"	c
+PPO2Agent	model/ppo2.py	/^class PPO2Agent(Agent):$/;"	c
+SIZE	gym-game2048/gym_game2048/envs/constants.py	/^SIZE = 400$/;"	v
+TqdmCallback	model/model_optimize.py	/^class TqdmCallback(object):$/;"	c
 __add_two_or_four	gym-game2048/gym_game2048/envs/game_2048.py	/^    def __add_two_or_four(self):$/;"	m	class:Game2048	file:
+__call__	model/model_optimize.py	/^    def __call__(self, _locals, _globals):$/;"	m	class:TqdmCallback
 __cover_up	gym-game2048/gym_game2048/envs/game_2048.py	/^    def __cover_up(self, board):$/;"	m	class:Game2048	file:
 __down	gym-game2048/gym_game2048/envs/game_2048.py	/^    def __down(self):$/;"	m	class:Game2048	file:
-__init__	gym-game2048/gym_game2048/envs/env.py	/^    def __init__(self, board_size, seed=None):$/;"	m	class:Game2048Env
+__init__	gym-game2048/gym_game2048/envs/env.py	/^    def __init__(self, board_size, binary, mlp, seed=None):$/;"	m	class:Game2048Env
 __init__	gym-game2048/gym_game2048/envs/game_2048.py	/^    def __init__(self, board_size: int, invalid_move_warmup=16, invalid_move_threshold=0.1):$/;"	m	class:Game2048
-__init__	model/model_optimize.py	/^    def __init__(self, *args, **kwargs):$/;"	m	class:CustomPolicy
+__init__	model/agents.py	/^    def __init__($/;"	m	class:Agent
+__init__	model/custom_policy_ppo.py	/^    def __init__($/;"	m	class:FeedForwardPolicy
+__init__	model/custom_policy_ppo.py	/^    def __init__(self, sess, ob_space, ac_space, n_env, n_steps, n_batch, reuse=False, **_kwargs/;"	m	class:CustomCnnPolicy
+__init__	model/custom_policy_ppo.py	/^    def __init__(self, sess, ob_space, ac_space, n_env, n_steps, n_batch, reuse=False, **_kwargs/;"	m	class:CustomMlpPolicy
+__init__	model/model_optimize.py	/^    def __init__($/;"	m	class:CustomPolicy
+__init__	model/model_optimize.py	/^    def __init__(self):$/;"	m	class:TqdmCallback
+__init__	model/ppo2.py	/^    def __init__($/;"	m	class:PPO2Agent
 __left	gym-game2048/gym_game2048/envs/game_2048.py	/^    def __left(self):$/;"	m	class:Game2048	file:
 __merge	gym-game2048/gym_game2048/envs/game_2048.py	/^    def __merge(self, board):$/;"	m	class:Game2048	file:
 __reverse	gym-game2048/gym_game2048/envs/game_2048.py	/^    def __reverse(self, board):$/;"	m	class:Game2048	file:
 __right	gym-game2048/gym_game2048/envs/game_2048.py	/^    def __right(self):$/;"	m	class:Game2048	file:
 __transpose	gym-game2048/gym_game2048/envs/game_2048.py	/^    def __transpose(self, board):$/;"	m	class:Game2048	file:
 __up	gym-game2048/gym_game2048/envs/game_2048.py	/^    def __up(self):$/;"	m	class:Game2048	file:
+_init_model	model/agents.py	/^    def _init_model(self):$/;"	m	class:Agent
+_init_model	model/ppo2.py	/^    def _init_model(self):$/;"	m	class:PPO2Agent
+_states	model/test_policy_instance.py	/^    action, _states = model.predict(obs)$/;"	v
+action	model/test_policy_instance.py	/^    action, _states = model.predict(obs)$/;"	v
 best_mean_reward	model/model_optimize.py	/^best_mean_reward, n_steps = -np.inf, 0$/;"	v
+best_mean_reward	model/play_game.py	/^best_mean_reward, n_steps = -np.inf, 0$/;"	v
 board_size	gym-game2048/gym_game2048/envs/check_env.py	/^board_size = 4$/;"	v
-callback	model/model_optimize.py	/^def callback(_locals, _globals):$/;"	f
 confirm_move	gym-game2048/gym_game2048/envs/game_2048.py	/^    def confirm_move(self):$/;"	m	class:Game2048
-create_env	model/model_optimize.py	/^def create_env(board_size, seed):$/;"	f
+control	model/model_optimize.py	/^control = {0: "up", 1: "down", 2: "right", 3: "left"}$/;"	v
+create_env	model/model_optimize.py	/^def create_env(board_size, seed, binary):$/;"	f
+create_env	model/play_game.py	/^def create_env(board_size, seed, binary):$/;"	f
 df	model/get_trials.py	/^df = study.trials_dataframe(attrs=("number", "value", "params", "state"))$/;"	v
+dones	model/test_policy_instance.py	/^    obs, rewards, dones, info = env.step(action)$/;"	v
 env	gym-game2048/gym_game2048/envs/check_env.py	/^env = gym.make("game2048-v0", board_size=board_size, seed=seed)$/;"	v
-game	gym-game2048/gym_game2048/envs/test_performance_numba.py	/^game = Game2048(4)$/;"	v
+env	model/test_policy_instance.py	/^env = make_vec_env("CartPole-v1", n_envs=4)$/;"	v
+f1	model/play_game.py	/^f1 = tk.Frame(width=600, height=600)$/;"	v
+get_board	gym-game2048/gym_game2048/envs/env.py	/^    def get_board(self):$/;"	m	class:Game2048Env
 get_board	gym-game2048/gym_game2048/envs/game_2048.py	/^    def get_board(self):$/;"	m	class:Game2048
 get_move_score	gym-game2048/gym_game2048/envs/game_2048.py	/^    def get_move_score(self):$/;"	m	class:Game2048
+get_power_2_mat	gym-game2048/gym_game2048/envs/game_2048.py	/^    def get_power_2_mat(self):$/;"	m	class:Game2048
 get_total_score	gym-game2048/gym_game2048/envs/game_2048.py	/^    def get_total_score(self):$/;"	m	class:Game2048
+info	model/test_policy_instance.py	/^    obs, rewards, dones, info = env.step(action)$/;"	v
 log_dir	model/model_optimize.py	/^log_dir = "tmp\/"$/;"	v
 main	model/model_optimize.py	/^def main():$/;"	f
+main	model/play_game.py	/^def main():$/;"	f
 make_move	gym-game2048/gym_game2048/envs/game_2048.py	/^    def make_move(self, move):$/;"	m	class:Game2048
 metadata	gym-game2048/gym_game2048/envs/env.py	/^    metadata = {"render.modes": ["human"]}$/;"	v	class:Game2048Env
-move	gym-game2048/gym_game2048/envs/test_performance_numba.py	/^    move = np.random.randint(4)$/;"	v
+mlp_extractor	model/custom_policy_ppo.py	/^def mlp_extractor(flat_observations, net_arch, act_fun):$/;"	f
+model	model/test_policy_instance.py	/^model = PPO2(policy, env, verbose=1)$/;"	v
+model	model/test_policy_instance.py	/^model = PPO2.load("ppo2_cartpole")$/;"	v
+modified_cnn	model/custom_policy.py	/^def modified_cnn(scaled_images, **kwargs):$/;"	f
+modified_cnn	model/custom_policy_ppo.py	/^def modified_cnn(scaled_images, **kwargs):$/;"	f
+modified_cnn	model/model_optimize.py	/^def modified_cnn(scaled_images, **kwargs):$/;"	f
 n_steps	model/model_optimize.py	/^best_mean_reward, n_steps = -np.inf, 0$/;"	v
+n_steps	model/play_game.py	/^best_mean_reward, n_steps = -np.inf, 0$/;"	v
+nature_cnn	model/model_optimize.py	/^def nature_cnn(scaled_images, **kwargs):$/;"	f
 np	gym-game2048/gym_game2048/envs/env.py	/^import numpy as np$/;"	I
 np	gym-game2048/gym_game2048/envs/game_2048.py	/^import numpy as np$/;"	I
 np	gym-game2048/gym_game2048/envs/game_2048_unittest.py	/^import numpy as np$/;"	I
-np	gym-game2048/gym_game2048/envs/test_performance_numba.py	/^import numpy as np$/;"	I
+np	model/custom_policy_ppo.py	/^import numpy as np$/;"	I
 np	model/model_optimize.py	/^import numpy as np$/;"	I
+np	model/play_game.py	/^import numpy as np$/;"	I
+obs	model/test_policy_instance.py	/^    obs, rewards, dones, info = env.step(action)$/;"	v
+obs	model/test_policy_instance.py	/^obs = env.reset()$/;"	v
 optimize_agent	model/model_optimize.py	/^def optimize_agent(trial):$/;"	f
 plt	model/model_optimize.py	/^import matplotlib.pyplot as plt$/;"	I
+plt	model/play_game.py	/^import matplotlib.pyplot as plt$/;"	I
+ppo2_agent	model/ppo2.py	/^ppo2_agent = PPO2Agent(model_kwargs={"agent": "ppo2", "gamma": 0.98}, n_steps=100000, env_kwargs/;"	v
+proba_step	model/custom_policy_ppo.py	/^    def proba_step(self, obs, state=None, mask=None):$/;"	m	class:FeedForwardPolicy
+proba_step	model/model_optimize.py	/^    def proba_step(self, obs, state=None, mask=None):$/;"	m	class:CustomPolicy
 render	gym-game2048/gym_game2048/envs/env.py	/^    def render(self, mode="human"):$/;"	m	class:Game2048Env
 reset	gym-game2048/gym_game2048/envs/env.py	/^    def reset(self):$/;"	m	class:Game2048Env
 reset	gym-game2048/gym_game2048/envs/game_2048.py	/^    def reset(self):$/;"	m	class:Game2048
+rewards	model/test_policy_instance.py	/^    obs, rewards, dones, info = env.step(action)$/;"	v
 seed	gym-game2048/gym_game2048/envs/check_env.py	/^seed = None$/;"	v
 set_board	gym-game2048/gym_game2048/envs/game_2048.py	/^    def set_board(self, board):$/;"	m	class:Game2048
+set_params	model/model_optimize.py	/^def set_params():$/;"	f
 spec	gym-game2048/gym_game2048/envs/game_2048.py	/^spec = [$/;"	v
 step	gym-game2048/gym_game2048/envs/env.py	/^    def step(self, action):$/;"	m	class:Game2048Env
+step	model/custom_policy_ppo.py	/^    def step(self, obs, state=None, mask=None, deterministic=False):$/;"	m	class:FeedForwardPolicy
+step	model/model_optimize.py	/^    def step(self, obs, state=None, mask=None, deterministic=True):$/;"	m	class:CustomPolicy
 study	model/get_trials.py	/^study = optuna.create_study($/;"	v
 study_name	model/get_trials.py	/^study_name = sys.argv[1]$/;"	v
 study_name	model/model_optimize.py	/^study_name = sys.argv[1]$/;"	v
@@ -68,7 +119,19 @@ test_up_board	gym-game2048/gym_game2048/envs/game_2048_unittest.py	/^    def tes
 test_up_total	gym-game2048/gym_game2048/envs/game_2048_unittest.py	/^    def test_up_total(self):$/;"	m	class:Game2048Test
 test_verify_game_state_merge	gym-game2048/gym_game2048/envs/game_2048_unittest.py	/^    def test_verify_game_state_merge(self):$/;"	m	class:Game2048Test
 test_verify_game_state_zero	gym-game2048/gym_game2048/envs/game_2048_unittest.py	/^    def test_verify_game_state_zero(self):$/;"	m	class:Game2048Test
+tf	model/custom_policy.py	/^import tensorflow as tf$/;"	I
+tf	model/custom_policy_ppo.py	/^import tensorflow as tf$/;"	I
+tf	model/model_optimize.py	/^import tensorflow as tf$/;"	I
+tf	model/play_game.py	/^import tensorflow as tf$/;"	I
+tf_layers	model/model_optimize.py	/^import tensorflow.contrib.layers as tf_layers$/;"	I
+tf_layers	model/play_game.py	/^import tensorflow.contrib.layers as tf_layers$/;"	I
+tk	model/play_game.py	/^import tkinter as tk$/;"	I
+tqdm_callback	model/model_optimize.py	/^tqdm_callback = TqdmCallback()$/;"	v
+train	model/ppo2.py	/^    def train(self):$/;"	m	class:PPO2Agent
 train_model	model/model_optimize.py	/^def train_model(env, steps, model_params):$/;"	f
 train_specific_params	model/model_optimize.py	/^def train_specific_params():$/;"	f
+transform_board_to_power_2_mat	gym-game2048/gym_game2048/envs/game_2048.py	/^    def transform_board_to_power_2_mat(self):$/;"	m	class:Game2048
 trial_hiperparameter	model/model_optimize.py	/^def trial_hiperparameter(trial):$/;"	f
+value	model/custom_policy_ppo.py	/^    def value(self, obs, state=None, mask=None):$/;"	m	class:FeedForwardPolicy
+var_env_kwargs	model/ppo2.py	/^var_env_kwargs = {"board_size": 4, "binary": True, "mlp": True}$/;"	v
 verify_game_state	gym-game2048/gym_game2048/envs/game_2048.py	/^    def verify_game_state(self):$/;"	m	class:Game2048

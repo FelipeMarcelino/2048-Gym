@@ -1,11 +1,12 @@
 import numpy as np
+import math
 from numba import jitclass, njit, gdb_init
-from numba import uint32, int32, int32, b1, float64
+from numba import uint32, int32, int32, b1, float64, float32
 
 spec = [
     ("__board_size", int32),
-    ("__total_score", uint32),
-    ("__score", uint32),
+    ("__total_score", int32),
+    ("__score", int32),
     ("__temp_board", uint32[:, :]),
     ("__board", uint32[:, :]),
     ("__done_merge", b1),
@@ -14,6 +15,7 @@ spec = [
     ("__total_count", uint32),
     ("__invalid_move_warmup", uint32),
     ("__invalid_move_threshold", float64),
+    ("__power_mat", uint32[:, :, :]),
 ]
 
 
@@ -34,6 +36,7 @@ class Game2048:
         self.__add_two_or_four()
         self.__done_merge = False
         self.__done_cover_up = False
+        self.__power_mat = np.zeros((board_size, board_size, 16 + (board_size - 4)), dtype=np.uint32)
 
     def __add_two_or_four(self):
         """Add tile with number two."""
@@ -161,10 +164,12 @@ class Game2048:
     def confirm_move(self):
         """Execute movement."""
         self.__total_count = self.__total_count + 1
+        self.__total_score = self.__total_score + self.__score
         if np.array_equal(self.__board, self.__temp_board):
             self.__invalid_count = self.__invalid_count + 1
-        self.__board = self.__temp_board.copy()
-        self.__total_score = self.__total_score + self.__score
+            self.__score = 0
+        else:
+            self.__board = self.__temp_board.copy()
         self.__add_two_or_four()
 
     def make_move(self, move):
@@ -186,13 +191,13 @@ class Game2048:
             self.__invalid_count > self.__invalid_move_warmup
             and self.__invalid_count > self.__invalid_move_threshold * self.__total_count
         ):
-            return True
+            return True, 0
 
         # Verify zero entries
         for line in range(self.__board_size):
             for column in range(self.__board_size):
                 if self.__board[line][column] == 0:
-                    return False
+                    return False, 0
 
         # Verify possible merges
         for line in range(1, self.__board_size):
@@ -201,18 +206,34 @@ class Game2048:
                     self.__board[line][column] == self.__board[line][column - 1]
                     or self.__board[line][column] == self.__board[line - 1][column]
                 ):
-                    return False
+                    return False, 0
 
         # Veirfy possible merges in first column and first line
         for line in range(1, self.__board_size):
             if self.__board[line][0] == self.__board[line - 1][0]:
-                return False
+                return False, 0
 
         for column in range(1, self.__board_size):
             if self.__board[0][column] == self.__board[0][column - 1]:
-                return False
+                return False, 0
 
-        return True
+        return True, -1
+
+    def get_power_2_mat(self):
+        return self.__power_mat
+
+    def transform_board_to_power_2_mat(self):
+        self.__power_mat = np.zeros(
+            shape=(self.__board_size, self.__board_size, 16 + (self.__board_size - 4)), dtype=np.uint32
+        )
+
+        for line in range(self.__board_size):
+            for column in range(self.__board_size):
+                if self.__board[line][column] == 0:
+                    self.__power_mat[line][column][0] = 1
+                else:
+                    power = int(np.log2(self.__board[line][column]))
+                    self.__power_mat[line][column][power] = 1
 
     def reset(self):
         self.__board = np.zeros((self.__board_size, self.__board_size), dtype=np.uint32)
