@@ -1,7 +1,7 @@
 import numpy as np
 import warnings
 import tensorflow as tf
-from stable_baselines.common.policies import MlpPolicy, CnnPolicy, ActorCriticPolicy
+from stable_baselines.common.policies import ActorCriticPolicy
 from stable_baselines.a2c.utils import conv, linear
 from itertools import zip_longest
 

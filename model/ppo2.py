@@ -1,25 +1,42 @@
-from agents import Agent
+from agent import Agent
 from stable_baselines import PPO2
 from custom_policy_ppo import CustomCnnPolicy, CustomMlpPolicy
 from stable_baselines.common.callbacks import CheckpointCallback
+from stable_baselines.common.evaluation import evaluate_policy
+from custom_callbacks import CustomCallbackPPO2
 import gym
 import gym_game2048
+import os
+import sys
 
 
 class PPO2Agent(Agent):
     def __init__(
         self,
-        env_name="gym_game2048:game2048-v0",
+        model_name="model_name",
+        save_dir="./models",
         log_interval=1e4,
         num_cpus=8,
-        custom_policy=None,
+        eval_episodes=1000,
         n_steps=1e6,
+        layer_normalization=False,
         model_kwargs={"tensorboard_log": "./tensorboards/"},
-        env_kwargs={"board_size": 4, "binary": True, "mlp": False},
-        callbacks_kwargs={"save_freq": 0},
+        env_kwargs={"board_size": 4, "binary": True, "extractor": "cnn"},
+        callback_checkpoint_kwargs={"save_freq": 0, "save_path": "./models/", "name_prefix": "model_name"},
+        callback_hist_kwargs={"hist_freq": 0},
     ):
         super().__init__(
-            env_name, num_cpus, model_kwargs, env_kwargs, custom_policy, callbacks_kwargs, n_steps, log_interval
+            model_name,
+            save_dir,
+            num_cpus,
+            model_kwargs,
+            env_kwargs,
+            layer_normalization,
+            callback_checkpoint_kwargs,
+            callback_hist_kwargs,
+            n_steps,
+            log_interval,
+            eval_episodes,
         )
         self._init_model()
 
@@ -31,22 +48,45 @@ class PPO2Agent(Agent):
 
         del self._model_kwargs["agent"]
 
-        if self._env_kwargs["mlp"] is False:
-            self._model = PPO2(CustomCnnPolicy, self._env, **self._model_kwargs)
-        else:
+        self._callback_checkpoint_kwargs["save_freq"] = int(
+            self._callback_checkpoint_kwargs["save_freq"] / self._num_cpus
+        )
+
+        if self._env_kwargs["extractor"] == "mlp":
             self._model = PPO2(CustomMlpPolicy, self._env, **self._model_kwargs)
+        else:
+            self._model = PPO2(CustomCnnPolicy, self._env, **self._model_kwargs)
 
     def train(self):
         callbacks = []
 
         # Checkpoint callback
-        if self._callback_kwargs["save_freq"] > 0:
-            checkpoint_callback = CheckpointCallback(**self._model_kwargs)
+        if self._callback_checkpoint_kwargs["save_freq"] > 0:
+
+            # Append model name into checkpoint save_path
+            self._callback_checkpoint_kwargs["save_path"] = (
+                self._callback_checkpoint_kwargs["save_path"] + "/" + str(self._model_name)
+            )
+            checkpoint_callback = CheckpointCallback(**self._callback_checkpoint_kwargs)
             callbacks.append(checkpoint_callback)
 
-        self._model.learn(self._n_steps, log_interval=self._log_interval, callback=callbacks)
+        if self._callback_hist_kwargs["hist_freq"] > 0:
+            # hist_callback = CustomCallbackPPO2(**self._callback_hist_kwargs)
+            # callbacks.append(hist_callback)
+            pass
 
+        try:
+            self._model.learn(
+                self._n_steps, log_interval=self._log_interval, callback=callbacks, tb_log_name=self._model_name
+            )
+        except KeyboardInterrupt:
+            pass
 
-var_env_kwargs = {"board_size": 4, "binary": True, "mlp": True}
-ppo2_agent = PPO2Agent(model_kwargs={"agent": "ppo2", "gamma": 0.98}, n_steps=100000, env_kwargs=var_env_kwargs)
-ppo2_agent.train()
+        folder_path = os.path.join(self._save_dir, self._model_name)
+        self._model.save(os.path.join(folder_path, self._model_name))
+
+    def test(self):
+
+        mean_reward = super()._test(self._model)
+
+        return mean_reward
