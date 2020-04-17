@@ -10,25 +10,34 @@ class Game2048Env(gym.Env):
 
     metadata = {"render.modes": ["human"]}
 
-    def __init__(self, board_size, binary, mlp, seed=None):
+    def __init__(
+        self, board_size, binary, extractor, invalid_move_warmup=16, invalid_move_threshold=0.1, penalty=-512, seed=None
+    ):
 
         self.state = np.zeros(board_size * board_size)
         self.__binary = binary
-        self.__mlp = mlp
+        self.__extractor = extractor
 
         if self.__binary is True:
-            if mlp is False:
+            if extractor == "cnn":
                 self.observation_space = spaces.Box(
                     0, 1, (board_size, board_size, 16 + (board_size - 4)), dtype=np.uint32
                 )
             else:
                 self.observation_space = spaces.Box(
-                    0, 1, (board_size * board_size * (16 + (board_size - 4))), dtype=np.uint32
+                    0, 1, (board_size * board_size * (16 + (board_size - 4)),), dtype=np.uint32
                 )
         else:
-            self.observation_space = spaces.Box(0, 2 ** 16, (board_size * board_size,), dtype=np.uint32)
+            if extractor == "mlp":
+                self.observation_space = spaces.Box(0, 2 ** 16, (board_size * board_size,), dtype=np.uint32)
+            else:
+                ValueError("Extractor must to be mlp when observation space is not binary")
+
         self.action_space = spaces.Discrete(4)  # Up, down, right, left
-        self.__game = Game2048(board_size)
+
+        if penalty > 0:
+            raise ValueError("The value of penalty needs to be between [0, -inf)")
+        self.__game = Game2048(board_size, invalid_move_warmup, invalid_move_threshold, penalty)
         self.__n_iter = 0
         self.__done = False
         self.__total_score = 0
@@ -45,7 +54,7 @@ class Game2048Env(gym.Env):
         if self.__binary is True:
             self.__game.transform_board_to_power_2_mat()
 
-            if self.__mlp is False:
+            if self.__extractor == "cnn":
                 self.state = self.__game.get_power_2_mat()
             else:
                 self.state = self.__game.get_power_2_mat().flatten()
@@ -71,7 +80,7 @@ class Game2048Env(gym.Env):
         self.__game.reset()
         if self.__binary is True:
             self.__game.transform_board_to_power_2_mat()
-            if self.__mlp is False:
+            if self.__extractor == "cnn":
                 self.state = self.__game.get_power_2_mat()
             else:
                 self.state = self.__game.get_power_2_mat().flatten()

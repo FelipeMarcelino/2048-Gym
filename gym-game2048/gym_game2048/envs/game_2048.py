@@ -16,12 +16,13 @@ spec = [
     ("__invalid_move_warmup", uint32),
     ("__invalid_move_threshold", float64),
     ("__power_mat", uint32[:, :, :]),
+    ("__penalty", int32),
 ]
 
 
 @jitclass(spec)
 class Game2048:
-    def __init__(self, board_size: int, invalid_move_warmup=16, invalid_move_threshold=0.1):
+    def __init__(self, board_size: int, invalid_move_warmup=16, invalid_move_threshold=0.1, penalty=-512):
 
         self.__board_size = board_size
         self.__score = 0
@@ -30,6 +31,7 @@ class Game2048:
         self.__total_count = 0
         self.__invalid_move_warmup = invalid_move_warmup
         self.__invalid_move_threshold = invalid_move_threshold
+        self.__penalty = penalty
         self.__board = np.zeros((board_size, board_size), dtype=np.uint32)
         self.__temp_board = np.zeros((board_size, board_size), dtype=np.uint32)
         self.__add_two_or_four()
@@ -167,7 +169,7 @@ class Game2048:
         self.__total_score = self.__total_score + self.__score
         if np.array_equal(self.__board, self.__temp_board):
             self.__invalid_count = self.__invalid_count + 1
-            self.__score = 0
+            self.__score = self.__penalty
         else:
             self.__board = self.__temp_board.copy()
         self.__add_two_or_four()
@@ -191,7 +193,7 @@ class Game2048:
             self.__invalid_count > self.__invalid_move_warmup
             and self.__invalid_count > self.__invalid_move_threshold * self.__total_count
         ):
-            return True, 0
+            return True, 2 * self.__penalty
 
         # Verify zero entries
         for line in range(self.__board_size):
@@ -217,7 +219,7 @@ class Game2048:
             if self.__board[0][column] == self.__board[0][column - 1]:
                 return False, 0
 
-        return True, -1
+        return True, self.__penalty / 2
 
     def get_power_2_mat(self):
         return self.__power_mat
