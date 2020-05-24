@@ -34,7 +34,7 @@ There is a guide of how to use this library [here](https://github.com/numba/numb
 * [numba](https://github.com/numba/numba)
 
 Installing dependecies
-`pip install -r [requirements.txt|requirements-gpu.txt]`,
+`pip install -r [requirements_cpu.txt|requirements-gpu.txt]`,
 choosing the appropriate file depending on whether you wish to run the models on a CPU or a GPU.
 
 **OR**
@@ -42,7 +42,7 @@ choosing the appropriate file depending on whether you wish to run the models on
 Using conda environment
 
 ```
-conda env create -f conda_env_gpu.yml|conda_env_cpu.yml
+conda env create -f [conda_env_gpu.yml|conda_env_cpu.yml]
 ```
 
 To install the environment, execute the following commands:
