@@ -94,3 +94,23 @@ optional arguments:
   --num_timesteps_log NUM_TIMESTEPS_LOG, -ntl NUM_TIMESTEPS_LOG
                         Continuing timesteps for tensorboard_log
 ```
+
+## Playing 
+
+Play the game using trained agent.
+
+```
+python play_game.py 
+```
+
+**OBS: It is necessary to change the model path and agent inside play_game.py**
+
+## Visualize
+
+See best model actions using Tkinter.
+
+```
+python show_played_game.py
+```
+**OBS: It is necessary to change the pickle game data inside show_played_game.py**
+
