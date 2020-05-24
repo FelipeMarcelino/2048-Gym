@@ -39,7 +39,7 @@ def main():
 
     env = create_env(4, None, True)
 
-    model = DQN.load("models/no_penalty_custom_parameters_3_4/no_penalty_custom_3_4.zip")
+    model = DQN.load("models/no_penalty_custom_parameters_3_4/no_penalty_custom_3_4")
 
     total_score = 0
     total_2048 = 0
