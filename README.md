@@ -18,7 +18,7 @@ There is a guide of how to use this library [here](https://github.com/optuna/opt
 
 ## Numba 
 
-[Numba] is an open source JIT compiler that translates a subset of Python and NumPy code into fast machine code.
+[Numba](https://github.com/numba/numba) is an open source JIT compiler that translates a subset of Python and NumPy code into fast machine code.
 
 There is a guide of how to use this library [here](https://github.com/numba/numba).
 
