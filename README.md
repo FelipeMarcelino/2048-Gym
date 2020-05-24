@@ -37,6 +37,14 @@ Installing dependecies
 `pip install -r [requirements.txt|requirements-gpu.txt]`,
 choosing the appropriate file depending on whether you wish to run the models on a CPU or a GPU.
 
+**OR**
+
+Using conda environment
+
+```
+conda env create -f conda_env_gpu.yml|conda_env_cpu.yml
+```
+
 To install the environment, execute the following commands:
 ```sh
 git clone https://github.com/FelipeMarcelino/2048-Gym/
