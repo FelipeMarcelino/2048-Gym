@@ -2,7 +2,7 @@
 
 ![Agent playing](https://github.com/FelipeMarcelino/2048-Gym/blob/master/model/img/play.gif)
 
-This repository is a project about using DQN(Q-Learning) to play the Game 2048.  The algorithm used is from [Stable Baselines](https://github.com/hill-a/stable-baselines), and the environment is a custom [Open AI](https://github.com/openai) env.  The environment contains two types of representation for the board: binary and no binary. The first one uses a power two matrix to represent each tile of the board. On the contrary, no binary uses a raw matrix board. 
+This repository is a project about using DQN(Q-Learning) to play the Game 2048 and accelarate and accelerate the environment using [Numba](https://github.com/numba/numba)).  The algorithm used is from [Stable Baselines](https://github.com/hill-a/stable-baselines), and the environment is a custom [Open AI](https://github.com/openai) env.  The environment contains two types of representation for the board: binary and no binary. The first one uses a power two matrix to represent each tile of the board. On the contrary, no binary uses a raw matrix board. 
 
 The model uses two different types of neural networks: CNN(Convolutional Neural Network), MLP(Multi-Layer Perceptron).
 The agent performed better using CNN as an extractor for features than MLP. Probably it is because **CNN** can extract spatial features. As a result, the agent achieve a 2048 tile in 10% of the 1000 played games.
@@ -16,6 +16,14 @@ Optuna can dynamically construct the search spaces for the hyperparameters.
 
 There is a guide of how to use this library [here](https://github.com/optuna/optuna).
 
+## Numba 
+
+[Numba] is an open source JIT compiler that translates a subset of Python and NumPy code into fast machine code.
+
+There is a guide of how to use this library [here](https://github.com/numba/numba).
+
+
+
 ## Instalation 
 
 * [OpenAI Gym](https://github.com/openai/gym)
@@ -23,6 +31,7 @@ There is a guide of how to use this library [here](https://github.com/optuna/opt
 * [Stable Baselines](https://github.com/hill-a/stable-baselines)
 * [Optuna](https://github.com/optuna/optuna)
 * [2048-Gym](https://github.com/FelipeMarcelino/2048-gym)
+* [numba](https://github.com/numba/numba)
 
 Installing dependecies
 `pip install -r [requirements.txt|requirements-gpu.txt]`,
