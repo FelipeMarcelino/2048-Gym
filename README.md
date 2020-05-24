@@ -33,8 +33,11 @@ To install the environment, execute the following commands:
 git clone https://github.com/FelipeMarcelino/2048-Gym/
 cd 2048-gym/gym-game2048/
 pip install -e .
+``` 
 
-```sh
+## Running
+
+```
 usage: model_optimize.py [-h] --agent AGENT
                          [--tensorboard-log TENSORBOARD_LOG]
                          [--study-name STUDY_NAME] [--trials TRIALS]
