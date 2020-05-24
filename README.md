@@ -31,7 +31,7 @@ There is a guide of how to use this library [here](https://github.com/numba/numb
 * [Stable Baselines](https://github.com/hill-a/stable-baselines)
 * [Optuna](https://github.com/optuna/optuna)
 * [2048-Gym](https://github.com/FelipeMarcelino/2048-gym)
-* [numba](https://github.com/numba/numba)
+* [Numba](https://github.com/numba/numba)
 
 Installing dependecies
 `pip install -r [requirements_cpu.txt|requirements-gpu.txt]`,
