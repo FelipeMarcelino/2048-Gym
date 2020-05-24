@@ -122,7 +122,7 @@ python play_game.py
 
 **OBS: It is necessary to change the model path and agent inside play_game.py**
 
-## Visualize
+## Visualization
 
 See best model actions using Tkinter.
 
