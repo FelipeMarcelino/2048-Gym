@@ -6,6 +6,9 @@ from acer import ACERAgent
 from dqn import DQNAgent
 
 
+"The three functions below are responsible to sample hyperparamters."
+
+
 def trial_hiperparameter_dqn(trial):
     """ Learning hyperparamters we want to optimise"""
     return {
@@ -56,6 +59,7 @@ def trial_hiperparameter_acer(trial):
 
 
 def optimize_agent(trial, args):
+    "Optimize the model."
 
     model_name = args.study_name + "_" + str(trial.number)
     env_kwargs = dict()
@@ -97,7 +101,6 @@ def optimize_agent(trial, args):
         model_kwargs["agent"] = "dqn"
         model_kwargs["tensorboard_log"] = args.tensorboard_log
         model_kwargs["double_q"] = True
-        model_kwargs["learning_starts"] = 10000
         model_kwargs["prioritized_replay"] = True
         model_kwargs["param_noise"] = True
         model = DQNAgent(
@@ -109,6 +112,8 @@ def optimize_agent(trial, args):
             n_steps,
             layer_normalization,
             layers,
+            args.load_path,
+            args.num_timesteps_log,
             model_kwargs,
             env_kwargs,
             callback_checkpoint_kwargs,
@@ -224,6 +229,15 @@ def main():
     )
     parser.add_argument(
         "--penalty", "-pe", default=-512, type=int, help="How much penalize the model when choose a invalid action"
+    )
+    parser.add_argument("--load_path", "-lp", default=None, type=str, help="Load model from")
+    parser.add_argument(
+        "--num_timesteps_log",
+        "-ntl",
+        default=None,
+        type=int,
+        help="Continuing timesteps for\
+                        tensorboard_log",
     )
 
     args = parser.parse_args()

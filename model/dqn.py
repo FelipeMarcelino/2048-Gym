@@ -18,6 +18,8 @@ class DQNAgent(Agent):
         n_steps=1e6,
         layer_normalization=False,
         layers=[64, 64],
+        load_path=None,
+        num_timesteps=None,
         model_kwargs={"tensorboard_log": "./tensorboards/"},
         env_kwargs={"board_size": 4, "binary": True, "extractor": "cnn"},
         callback_checkpoint_kwargs={"save_freq": 0, "save_path": "./models/", "name_prefix": "model_name"},
@@ -35,6 +37,8 @@ class DQNAgent(Agent):
             n_steps,
             log_interval,
             eval_episodes,
+            load_path,
+            num_timesteps,
         )
         self.__layers = layers
         self._init_model()
@@ -47,12 +51,23 @@ class DQNAgent(Agent):
 
         del self._model_kwargs["agent"]
 
+        if self._load_path is not None and self._num_timesteps is not None:
+            print("Loading model...", self._load_path)
+            self._model = DQN.load(
+                self._load_path,
+                num_timesteps=self._num_timesteps,
+                env=self._env,
+                tensorboard_log=self._model_kwargs["tensorboard_log"],
+            )
+            return
+
         if self._env_kwargs["extractor"] == "mlp":
             if self._layer_normalization is True:
                 self._model = DQN(
                     CustomLnMlpPolicy, self._env, policy_kwargs={"layers": self.__layers}, **self._model_kwargs
                 )
             else:
+                print("Entrou")
                 self._model = DQN(
                     CustomMlpPolicy, self._env, policy_kwargs={"layers": self.__layers}, **self._model_kwargs
                 )
@@ -67,6 +82,7 @@ class DQNAgent(Agent):
                 )
 
     def train(self):
+        "Optimize the model."
         callbacks = []
 
         # Checkpoint callback
@@ -95,6 +111,7 @@ class DQNAgent(Agent):
         self._model.save(os.path.join(folder_path, self._model_name))
 
     def test(self):
+        "Evaluate the model."
 
         mean_reward = super()._test(self._model)
         return mean_reward
