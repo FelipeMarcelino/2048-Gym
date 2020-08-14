@@ -88,7 +88,7 @@ optional arguments:
                         Save dictory models
   --log-interval LOG_INTERVAL, -li LOG_INTERVAL
                         Log interval
-  --no-binary, -bi      Don't use binary observation space
+  --no-binary, -bi      Do not use binary observation space
   --seed SEED           Seed
   --eval-episodes EVAL_EPISODES, -ee EVAL_EPISODES
                         The number of episodes to test after training the
