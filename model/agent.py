@@ -19,6 +19,8 @@ class Agent(metaclass=ABCMeta):
         n_steps,
         log_interval,
         eval_episodes,
+        load_path,
+        num_timesteps,
     ):
 
         self._model_kwargs = model_kwargs
@@ -32,6 +34,8 @@ class Agent(metaclass=ABCMeta):
         self._n_steps = n_steps
         self._log_interval = log_interval
         self._eval_episodes = eval_episodes
+        self._load_path = load_path
+        self._num_timesteps = num_timesteps
         env = gym.make("gym_game2048:game2048-v0", **self._env_kwargs)
         self._env = DummyVecEnv([lambda: env for i in range(self._num_cpus)])
 

@@ -65,7 +65,6 @@ class FeedForwardPolicy(DQNPolicy):
         if layers is None:
             layers = [64, 64]
 
-        print(layers)
         with tf.variable_scope("model", reuse=tf.AUTO_REUSE):
             with tf.variable_scope("action_value"):
                 if feature_extraction == "cnn":

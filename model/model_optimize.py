@@ -93,13 +93,19 @@ def optimize_agent(trial, args):
             callback_checkpoint_kwargs,
         )
     elif args.agent == "dqn":
-        model_kwargs = trial_hiperparameter_dqn(trial)
+        # model_kwargs = trial_hiperparameter_dqn(trial)
+        model_kwargs = {}
+        model_kwargs["learning_rate"] = 0.0001
+        model_kwargs["batch_size"] = 10000
+        model_kwargs["learning_starts"] = 10000
+        model_kwargs["target_network_update_freq"] = 1000
+        model_kwargs["train_freq"] = 4
         model_kwargs["agent"] = "dqn"
         model_kwargs["tensorboard_log"] = args.tensorboard_log
         model_kwargs["double_q"] = True
-        model_kwargs["learning_starts"] = 10000
         model_kwargs["prioritized_replay"] = True
         model_kwargs["param_noise"] = True
+        print(model_kwargs)
         model = DQNAgent(
             model_name,
             save_dir,
@@ -109,6 +115,8 @@ def optimize_agent(trial, args):
             n_steps,
             layer_normalization,
             layers,
+            args.load_path,
+            args.num_timesteps_log,
             model_kwargs,
             env_kwargs,
             callback_checkpoint_kwargs,
@@ -224,6 +232,15 @@ def main():
     )
     parser.add_argument(
         "--penalty", "-pe", default=-512, type=int, help="How much penalize the model when choose a invalid action"
+    )
+    parser.add_argument("--load_path", "-lp", default=None, type=str, help="Load model from")
+    parser.add_argument(
+        "--num_timesteps_log",
+        "-ntl",
+        default=None,
+        type=int,
+        help="Continuing timesteps for\
+                        tensorboard_log",
     )
 
     args = parser.parse_args()

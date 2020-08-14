@@ -172,7 +172,7 @@ class Game2048:
             self.__score = self.__penalty
         else:
             self.__board = self.__temp_board.copy()
-        self.__add_two_or_four()
+            self.__add_two_or_four()
 
     def make_move(self, move):
         """Make a move."""
@@ -193,7 +193,7 @@ class Game2048:
             self.__invalid_count > self.__invalid_move_warmup
             and self.__invalid_count > self.__invalid_move_threshold * self.__total_count
         ):
-            return True, 2 * self.__penalty
+            return True, self.__penalty
 
         # Verify zero entries
         for line in range(self.__board_size):
@@ -219,7 +219,7 @@ class Game2048:
             if self.__board[0][column] == self.__board[0][column - 1]:
                 return False, 0
 
-        return True, self.__penalty / 2
+        return True, self.__penalty
 
     def get_power_2_mat(self):
         return self.__power_mat
