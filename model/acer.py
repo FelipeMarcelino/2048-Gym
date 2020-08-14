@@ -3,7 +3,6 @@ from stable_baselines import ACER
 from custom_policy_ppo import CustomCnnPolicy, CustomMlpPolicy
 from stable_baselines.common.callbacks import CheckpointCallback
 from stable_baselines.common.evaluation import evaluate_policy
-from custom_callbacks import CustomCallbackPPO2
 import gym
 import gym_game2048
 import os
@@ -57,6 +56,7 @@ class ACERAgent(Agent):
             self._model = ACER(CustomCnnPolicy, self._env, **self._model_kwargs)
 
     def train(self):
+        "Optimize the model."
         callbacks = []
 
         # Checkpoint callback
@@ -85,6 +85,7 @@ class ACERAgent(Agent):
         self._model.save(os.path.join(folder_path, self._model_name))
 
     def test(self):
+        "Evaluate the model."
 
         mean_reward = super()._test(self._model)
         return mean_reward

@@ -3,7 +3,6 @@ from stable_baselines import PPO2
 from custom_policy_ppo import CustomCnnPolicy, CustomMlpPolicy
 from stable_baselines.common.callbacks import CheckpointCallback
 from stable_baselines.common.evaluation import evaluate_policy
-from custom_callbacks import CustomCallbackPPO2
 import gym
 import gym_game2048
 import os
@@ -58,6 +57,7 @@ class PPO2Agent(Agent):
             self._model = PPO2(CustomCnnPolicy, self._env, **self._model_kwargs)
 
     def train(self):
+        "Optimize the model."
         callbacks = []
 
         # Checkpoint callback
@@ -86,6 +86,7 @@ class PPO2Agent(Agent):
         self._model.save(os.path.join(folder_path, self._model_name))
 
     def test(self):
+        "Evaluate the model."
 
         mean_reward = super()._test(self._model)
 

@@ -23,6 +23,20 @@ spec = [
 @jitclass(spec)
 class Game2048:
     def __init__(self, board_size: int, invalid_move_warmup=16, invalid_move_threshold=0.1, penalty=-512):
+        """
+        This class is responsible to implement the game. 
+
+        Parameters
+        ----------
+        board_size : int
+            Size of the board. Default=4
+        invalid_move_warmup : int
+            Minimum of invalid movements to finish the episode. Default=16
+        invalid_move_threshold : float
+            How much(fraction) invalid movements is necessary according to the total of moviments already executed. to finish the episode after invalid_move_warmup. Default 0.1 
+        penalty : int
+            Penalization of invalid movements to sum up in reward function. Default=-512
+        """
 
         self.__board_size = board_size
         self.__score = 0
@@ -36,8 +50,6 @@ class Game2048:
         self.__temp_board = np.zeros((board_size, board_size), dtype=np.uint32)
         self.__add_two_or_four()
         self.__add_two_or_four()
-        self.__done_merge = False
-        self.__done_cover_up = False
         self.__power_mat = np.zeros((board_size, board_size, 16 + (board_size - 4)), dtype=np.uint32)
 
     def __add_two_or_four(self):
@@ -222,9 +234,11 @@ class Game2048:
         return True, self.__penalty
 
     def get_power_2_mat(self):
+        "Get power 2 matrix."
         return self.__power_mat
 
     def transform_board_to_power_2_mat(self):
+        "Transform board to a power 2 matrix."
         self.__power_mat = np.zeros(
             shape=(self.__board_size, self.__board_size, 16 + (self.__board_size - 4)), dtype=np.uint32
         )
@@ -238,6 +252,7 @@ class Game2048:
                     self.__power_mat[line][column][power] = 1
 
     def reset(self):
+        "Reset the game."
         self.__board = np.zeros((self.__board_size, self.__board_size), dtype=np.uint32)
         self.__temp_board = np.zeros((self.__board_size, self.__board_size), dtype=np.uint32)
         self.__score = 0

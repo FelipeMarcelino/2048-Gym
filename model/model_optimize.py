@@ -6,6 +6,9 @@ from acer import ACERAgent
 from dqn import DQNAgent
 
 
+"The three functions below are responsible to sample hyperparamters."
+
+
 def trial_hiperparameter_dqn(trial):
     """ Learning hyperparamters we want to optimise"""
     return {
@@ -56,6 +59,7 @@ def trial_hiperparameter_acer(trial):
 
 
 def optimize_agent(trial, args):
+    "Optimize the model."
 
     model_name = args.study_name + "_" + str(trial.number)
     env_kwargs = dict()

@@ -59,6 +59,7 @@ class DQNAgent(Agent):
                 env=self._env,
                 tensorboard_log=self._model_kwargs["tensorboard_log"],
             )
+            return
 
         if self._env_kwargs["extractor"] == "mlp":
             if self._layer_normalization is True:
@@ -80,6 +81,7 @@ class DQNAgent(Agent):
                 )
 
     def train(self):
+        "Optimize the model."
         callbacks = []
 
         # Checkpoint callback
@@ -108,6 +110,7 @@ class DQNAgent(Agent):
         self._model.save(os.path.join(folder_path, self._model_name))
 
     def test(self):
+        "Evaluate the model."
 
         mean_reward = super()._test(self._model)
         return mean_reward
