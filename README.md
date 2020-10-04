@@ -1,4 +1,4 @@
-# 2048-Gym
+# 2048-The Great Beast Gym
 
 ![Agent playing](https://github.com/FelipeMarcelino/2048-Gym/blob/master/model/img/play.gif)
 
